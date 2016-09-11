@@ -1,0 +1,34 @@
+<ion-view view-title="Needs">
+  <div class="bar bar-subheader">
+    <h2 class="title" style="font-weight: 100" ng-class="{ 'red': budget > budget2, 'green': budget <= budget2 }">{{budget | number:2}} / {{budget2 | number:2}}</h2>
+  </div>
+  <ion-content on-swipe-left="swipeLeft()" on-swipe-right="swipeRight()">
+    <br>
+    <br>
+    <br>
+    <ion-list style="font-weight: 100">
+      <ion-item class="text-center" ng-repeat="(key, value) in data.needs">
+        <span>
+          <span  style="text-align: center; margin-bottom: 5px;">{{key}}  &nbsp;&nbsp;<b style="font-weight: 100" ng-class="{ 'red': value.used > value.max, 'green': value.used <= value.max }">{{value.used | number:2}} / {{value.max | number:2}}</b></span>
+          <br>
+          <span style="margin-right: 5px;">
+            <div class="list">
+              <label class="item item-input">
+                <span class="input-label">Amount</span>
+                <input ng-model="val" type="text">
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Notes</span>
+                <input ng-model="notes" type="text">
+              </label>
+            </div>
+          <button ng-disabled="val === undefined || val === '' || val === null" ng-click="update(value.used, val, key, notes); val = null; notes = null;" class="button">
+            Add Purchase
+          </button>
+        </span>
+        </span>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
+

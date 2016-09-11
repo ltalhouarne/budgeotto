@@ -1,0 +1,54 @@
+<ion-view view-title="Logs">
+  <ion-content on-swipe-right="swipeRight()">
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search note description or $ values" ng-model="searchText">
+      </label>
+    </div>
+    <div class="list">
+      <div class="item item-divider">
+        Wants
+      </div>
+    </div>
+    <ion-list style="font-weight: 100">
+      <ion-item ng-repeat="(key, val) in wants">
+        <div class="card">
+          <div class="item item-divider">
+            {{key}}
+          </div>
+
+          <div ng-repeat ="v in val | toArray | customOrderBy | filter:searchText" class="item item-text-wrap">
+            <span ng-if="v.$key !== 'Setup'">{{v.$key | limitTo:25}}<br>
+            Notes: {{v.notes}}<br>
+            Value: {{v.value}}
+            </span>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+    <div class="list">
+      <div class="item item-divider">
+        Needs
+      </div>
+    </div>
+    <ion-list style="font-weight: 100">
+      <ion-item ng-repeat="(key, val) in needs">
+
+        <div class="card">
+          <div class="item item-divider">
+            {{key}}
+          </div>
+
+          <div ng-repeat ="v in val | toArray | customOrderBy | filter:searchText" class="item item-text-wrap">
+            <span ng-if="v.$key !== 'Setup'">{{v.$key | limitTo:25}}<br>
+            Notes: {{v.notes}}<br>
+            Value: {{v.value}}
+            </span>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
+

@@ -1,0 +1,62 @@
+<ion-view view-title="Graphs">
+  <ion-content on-swipe-left="swipeLeft()" on-swipe-right="swipeRight()">
+    <div class="list">
+      <div class="item item-divider">
+        Bar Chart - Wants
+      </div>
+    </div>
+    <canvas id="bar" class="chart chart-bar"
+            chart-data="data" chart-labels="labels" chart-series="series">
+    </canvas>
+    <div class="list">
+      <div class="item item-divider">
+        Bar Chart - Needs
+      </div>
+    </div>
+    <canvas id="bar2" class="chart chart-bar"
+            chart-data="dataN" chart-labels="labelsN" chart-series="seriesN">
+    </canvas>
+    <br>
+    <div class="list" style="margin-bottom: 10px;">
+      <div class="item item-divider">
+        Doughnut -  Wants
+      </div>
+    </div>
+    <canvas id="doughnut" class="chart chart-doughnut"
+            chart-data="dataD" chart-labels="labels">
+    </canvas>
+    <br>
+    <div class="list" style="margin-bottom: 10px;">
+      <div class="item item-divider">
+        Doughnut -  Needs (Rent excluded)
+      </div>
+    </div>
+    <canvas id="doughnut2" class="chart chart-doughnut"
+            chart-data="dataDN" chart-labels="labelsN">
+    </canvas>
+
+    <br>
+    <div class="list" style="margin-bottom: 10px;">
+      <div class="item item-divider">
+        Radar - Needs
+      </div>
+    </div>
+
+    <canvas id="radar2" class="chart chart-radar"
+            chart-data="dataN" chart-options="options" chart-labels="labelsN">
+    </canvas>
+    <br>
+
+    <div class="list">
+      <div class="item item-divider">
+        Radar - Wants
+      </div>
+    </div>
+    <br>
+
+    <canvas id="radar" class="chart chart-radar"
+            chart-data="data" chart-options="options" chart-labels="labels">
+    </canvas>
+
+  </ion-content>
+</ion-view>
