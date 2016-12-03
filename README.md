@@ -4,6 +4,8 @@
 
 Allows tracking of purchases as well as visualization of expenses through various graphs.
 
+## Screenshots
+
 
 ![Graph](https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0282%202.PNG)
 
