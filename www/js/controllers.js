@@ -132,6 +132,9 @@ angular.module('starter.controllers', ['firebase', 'chart.js'])
       $ionicTabsDelegate.select(2);
     };
 
+    $scope.chosenCategory = "Category";
+    $scope.chosenCategory2 = "Category";
+
     var ref = firebase.database().ref();
     $scope.data = $firebaseObject(ref);
     $scope.data.$watch(function() {

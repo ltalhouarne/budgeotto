@@ -1,49 +1,72 @@
 <ion-view view-title="Logs">
   <ion-content on-swipe-right="swipeRight()">
-    <div class="list list-inset">
-      <label class="item item-input">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" placeholder="Search note description or $ values" ng-model="searchText">
-      </label>
-    </div>
-    <div class="list">
-      <div class="item item-divider">
-        Wants
+    <br>
+    <label class="item item-input item-select">
+      <div class="input-label">
+        Select category
       </div>
-    </div>
+      <select ng-model="chosenCategory">
+        <option ng-repeat="(key, val) in wants" ng-value="key">
+          {{key}}
+        </option>
+      </select>
+    </label>
+    <br>
     <ion-list style="font-weight: 100">
-      <ion-item ng-repeat="(key, val) in wants">
+      <ion-item ng-repeat="(key, val) in wants" ng-show="chosenCategory == key">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="text" placeholder="Search note description or $ values" ng-model="searchText">
+        </label>
         <div class="card">
           <div class="item item-divider">
             {{key}}
           </div>
 
-          <div ng-repeat ="v in val | toArray | customOrderBy | filter:searchText" class="item item-text-wrap">
-            <span ng-if="v.$key !== 'Setup'">{{v.$key | limitTo:25}}<br>
-            Notes: {{v.notes}}<br>
-            Value: {{v.value}}
+          <div ng-repeat="v in val | toArray | customOrderBy | filter:searchText" class="item item-text-wrap">
+            <span ng-show="v.notes !== 'initial setup'">
+              <span ng-if="v.$key !== 'Setup'">{{v.$key | limitTo:25}}<br>
+              Notes: {{v.notes}}<br>
+              Value: {{v.value}}
+              </span>
+            </span>
+            <span ng-show="v.notes == 'initial setup'" ng-if="keys(val).length == 1">
+               No logs recorded.
             </span>
           </div>
         </div>
       </ion-item>
     </ion-list>
-    <div class="list">
-      <div class="item item-divider">
+    <label class="item item-input item-select">
+      <div class="input-label">
         Needs
       </div>
-    </div>
+      <select ng-model="chosenCategory2">
+        <option ng-repeat="(key, val) in needs" ng-value="key">
+          {{key}}
+        </option>
+      </select>
+    </label>
     <ion-list style="font-weight: 100">
-      <ion-item ng-repeat="(key, val) in needs">
-
+      <ion-item ng-repeat="(key, val) in needs" ng-show="chosenCategory2 == key">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="text" placeholder="Search note description or $ values" ng-model="searchText2">
+        </label>
         <div class="card">
           <div class="item item-divider">
             {{key}}
           </div>
 
-          <div ng-repeat ="v in val | toArray | customOrderBy | filter:searchText" class="item item-text-wrap">
-            <span ng-if="v.$key !== 'Setup'">{{v.$key | limitTo:25}}<br>
-            Notes: {{v.notes}}<br>
-            Value: {{v.value}}
+          <div ng-repeat="v in val | toArray | customOrderBy | filter:searchText2" class="item item-text-wrap">
+            <span ng-show="v.notes !== 'initial setup'">
+              <span ng-if="v.$key !== 'Setup'">{{v.$key | limitTo:25}}<br>
+              Notes: {{v.notes}}<br>
+              Value: {{v.value}}
+              </span>
+            </span>
+            <span ng-show="v.notes == 'initial setup'" ng-if="keys(val).length == 1">
+               No logs recorded.
             </span>
           </div>
         </div>
