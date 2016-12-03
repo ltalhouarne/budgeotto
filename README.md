@@ -6,9 +6,6 @@ Allows tracking of purchases as well as visualization of expenses through variou
 
 ## Screenshots
 
-
-![Graph](https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0282%202.PNG)
-
 ![Graph](https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0282.PNG)
 
 ![Graph](https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0283.PNG)
