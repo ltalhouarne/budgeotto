@@ -4,16 +4,14 @@
 
 Allows tracking of purchases as well as visualization of expenses through various graphs.
 
-## Screenshots
+## App Screenshots
 
-![Graph](https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0282.PNG)
+<img src="https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0282.PNG" width="250">
+<img src="https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0283.PNG" width="250">
+<img src="https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0284.PNG" width="250">
+<img src="https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0285.PNG" width="250">
+<img src="https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0286.PNG" width="250">
 
-![Graph](https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0283.PNG)
+## Data Structure
 
-![Graph](https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0284.PNG)
-
-![Graph](https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0285.PNG)
-
-![Graph](https://github.com/ltalhouarne/budgeotto/blob/master/img/IMG_0286.PNG)
-
-![Graph](https://github.com/ltalhouarne/budgeotto/blob/master/img/Screen%20Shot%202016-12-03%20at%2012.53.11%20PM.png)
+<img src="https://github.com/ltalhouarne/budgeotto/blob/master/img/Screen%20Shot%202016-12-03%20at%2012.53.11%20PM.png" width="250">
