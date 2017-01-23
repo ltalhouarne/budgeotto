@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['firebase', 'chart.js'])
 
-  .controller('WantsCtrl', function ($scope, $firebaseObject, $ionicLoading, $timeout, $ionicTabsDelegate) {
+  .controller('WantsCtrl', function ($scope, $firebaseObject, $ionicLoading, $timeout, $ionicTabsDelegate, $ionicPopup) {
     $ionicLoading.show({
       template: 'Loading...'
     });
@@ -26,6 +26,44 @@ angular.module('starter.controllers', ['firebase', 'chart.js'])
       $scope.budget = tmoBudget;
       $scope.budget2 = tmoBudget2;
     });
+
+    $scope.resetWants = function () {
+      $ionicLoading.show({
+        template: 'Resetting data...'
+      });
+
+      angular.forEach($scope.data.wants, function (value, key) {
+        if(value.used !== 0) value.used = 0;
+      });
+
+      $ionicPopup.show({
+        title: 'Are you sure?',
+        subTitle: 'This is irreversible',
+        scope: $scope,
+        buttons: [
+          {
+            text: 'Nvm',
+            onTap: function() {
+              $ionicLoading.hide();
+            }
+          },
+          {
+            text: '<b>Yes</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              $scope.data.$save().then(function (ref) {
+                $ionicLoading.hide();
+              }, function (error) {
+                $ionicLoading.hide();
+              });
+            }
+          }
+        ]
+      });
+
+      $ionicLoading.hide();
+
+    };
 
     $scope.data.$watch(function () {
       var tmoBudget = 0;
@@ -143,7 +181,35 @@ angular.module('starter.controllers', ['firebase', 'chart.js'])
     });
   })
 
-  .controller('NeedsCtrl', function ($scope, $firebaseObject, $ionicLoading, $firebaseArray, $timeout, $ionicTabsDelegate) {
+  .controller('NeedsCtrl', function ($scope, $firebaseObject, $ionicLoading, $firebaseArray, $timeout, $ionicTabsDelegate, $ionicPopup) {
+    $scope.resetNeeds = function () {
+
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Are you sure?'
+      });
+
+      confirmPopup.then(function(res) {
+        if(res) {
+          console.log("res");
+          $ionicLoading.show({
+            template: 'Resetting data...'
+          });
+
+          angular.forEach($scope.data.needs, function (value, key) {
+            if(value.used !== 0) value.used = 0;
+          });
+
+          $scope.data.$save().then(function (ref) {
+            $ionicLoading.hide();
+          }, function (error) {
+            $ionicLoading.hide();
+          });
+        }
+      });
+
+      $ionicLoading.hide();
+    };
+
     $ionicLoading.show({
       template: 'Loading...'
     });
