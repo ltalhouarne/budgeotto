@@ -12,7 +12,7 @@
     <br>
     <ion-list style="font-weight: 100">
       <ion-item class="text-center" ng-repeat="(key, value) in data.wants">
-        <span>
+        <span ng-init="budget = (value.max | number:2)">
           <span style="margin-bottom: 5px;">{{key}}  &nbsp;&nbsp;<b ng-class="{ 'red': value.used > value.max, 'green': value.used <= value.max }" style="font-weight: 100">{{value.used | number:2}} / {{value.max | number:2}}</b></span>
           <br>
            <span style="margin-right: 5px;">
@@ -25,9 +25,13 @@
                 <span class="input-label">Notes</span>
                 <input ng-model="notes" type="text">
               </label>
+              <label class="item item-input">
+                <span class="input-label">Budget</span>
+                <input ng-model="budget" type="text" value="value.max | number:2">
+              </label>
             </div>
-          <button ng-disabled="val === undefined || val === '' || val === null" ng-click="update(value.used, val, key, notes); val = null; notes = null;" class="button">
-            Add Purchase
+          <button ng-disabled="(val === undefined || val === '' || val === null) && (budget === undefined || budget === '' || budget === null)" ng-click="update(value.used, val, key, notes, budget); val = null; notes = null;" class="button">
+            Add Purchase/Update budget
           </button>
         </span>
         </span>

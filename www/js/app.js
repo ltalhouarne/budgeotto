@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'angular-toArrayFilter'])
+angular.module('starter', ['ionic', 'starter.controllers', 'angular-toArrayFilter', 'ionic.native'])
 
 .run(function($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function() {
@@ -16,6 +16,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angular-toArrayFilte
       cordova.plugins.Keyboard.disableScroll(true);
 
     }
+
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
@@ -33,14 +34,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angular-toArrayFilte
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-  // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'
+  })
+
+  .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
   })
-
-  // Each tab has its own nav history stack:
 
   .state('tab.wants', {
     url: '/wants',
@@ -52,25 +56,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angular-toArrayFilte
     }
   })
 
-    .state('tab.graphs', {
-      url: '/graphs',
-      views: {
-        'tab-graphs': {
-          templateUrl: 'templates/tab-graphs.html',
-          controller: 'GraphsCtrl'
-        }
+  .state('tab.graphs', {
+    url: '/graphs',
+    views: {
+      'tab-graphs': {
+        templateUrl: 'templates/tab-graphs.html',
+        controller: 'GraphsCtrl'
       }
-    })
+    }
+  })
 
-    .state('tab.logs', {
-      url: '/logs',
-      views: {
-        'tab-logs': {
-          templateUrl: 'templates/tab-logs.html',
-          controller: 'LogsCtrl'
-        }
+  .state('tab.logs', {
+    url: '/logs',
+    views: {
+      'tab-logs': {
+        templateUrl: 'templates/tab-logs.html',
+        controller: 'LogsCtrl'
       }
-    })
+    }
+  })
 
   .state('tab.needs', {
       url: '/needs',
@@ -78,9 +82,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angular-toArrayFilte
         'tab-needs': {
           templateUrl: 'templates/tab-needs.html',
           controller: 'NeedsCtrl'
-        }
       }
-    });
+    }
+  });
 
-  $urlRouterProvider.otherwise('/tab/wants');
+  $urlRouterProvider.otherwise('/login');
 });
