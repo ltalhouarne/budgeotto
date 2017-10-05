@@ -1,4 +1,9 @@
 {
   "name": "bud",
-  "app_id": ""
+  "app_id": "",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic1",
+  "watchPatterns": []
 }

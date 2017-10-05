@@ -1,4 +1,6 @@
-angular.module('starter.controllers', ['firebase', 'chart.js'])
+var googleProvider = new firebase.auth.GoogleAuthProvider();
+
+angular.module('starter.controllers', ['firebase', 'chart.js', 'ionic.native'])
 
   .controller('WantsCtrl', function ($scope, $firebaseObject, $ionicLoading, $timeout, $ionicTabsDelegate, $ionicPopup) {
     $ionicLoading.show({
@@ -63,14 +65,13 @@ angular.module('starter.controllers', ['firebase', 'chart.js'])
       $scope.budget2 = tmoBudget2;
     });
 
-    $scope.update = function (use, val, key, notes) {
+    $scope.update = function (use, val, key, notes, budget) {
       $ionicLoading.show({
         template: 'Loading...'
       });
 
-      if (!isNaN(val)) {
+      if (!isNaN(val) && val !== '' && val !== null && val !== undefined) {
         var date = new Date();
-
         if (notes === undefined || notes === "" || notes === null) {
           $ionicLoading.show({
             template: 'Notes? 😱'
@@ -83,6 +84,10 @@ angular.module('starter.controllers', ['firebase', 'chart.js'])
           $scope.data.logs.wantsSection[key][date] = {value: val, notes: notes};
 
           $scope.data.wants[key].used = +use + +val;
+        }
+      } else {
+        if(budget !== undefined && budget !== "" && budget !== null) {
+          $scope.data.wants[key].max = +budget;
 
           $scope.data.$save().then(function (ref) {
             $ionicLoading.hide();
@@ -168,6 +173,40 @@ angular.module('starter.controllers', ['firebase', 'chart.js'])
     });
   })
 
+  .controller('LoginCtrl', function ($ionicLoading, $state, $location, $cordovaGooglePlus, $scope, $firebaseObject, $ionicLoading, $ionicTabsDelegate) {
+    $scope.login = function () {
+      $ionicLoading.show();
+
+      if(ionic.Platform.isWebView()){
+        $cordovaGooglePlus.login({})
+          .then(function(res) {
+            firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+              .then(function(result) {
+                $ionicLoading.hide();
+                $state.go("tab.wants");
+              })
+              .catch(function(err) {
+                console.log('error');
+              });
+          }, function(err) {
+            console.log('error');
+            console.log(err);
+            $ionicLoading.hide();
+          });
+      } else{
+        firebase.auth().signInWithPopup(googleProvider)
+          .then(function(result) {
+            console.log("Result: " + result);
+            $ionicLoading.hide();
+            $state.go("tab.wants");
+          }).catch(function(error) {
+            console.log(error + " " + error);
+            $ionicLoading.hide();
+        });
+      }
+    };
+  })
+
   .controller('NeedsCtrl', function ($scope, $firebaseObject, $ionicLoading, $firebaseArray, $timeout, $ionicTabsDelegate, $ionicPopup) {
     $scope.resetNeeds = function () {
 
@@ -239,12 +278,12 @@ angular.module('starter.controllers', ['firebase', 'chart.js'])
       $scope.budget2 = tmoBudget2;
     });
 
-    $scope.update = function (use, val, key, notes) {
+    $scope.update = function (use, val, key, notes, budget) {
       $ionicLoading.show({
         template: 'Loading...'
       });
 
-      if (!isNaN(val)) {
+      if (!isNaN(val) && val !== '' && val !== null && val !== undefined) {
         var date = new Date();
         if (notes === undefined || notes === "" || notes === null) {
           $ionicLoading.show({
@@ -258,6 +297,10 @@ angular.module('starter.controllers', ['firebase', 'chart.js'])
           $scope.data.logs.needsSection[key][date] = {value: val, notes: notes};
 
           $scope.data.needs[key].used = +use + +val;
+        }
+      } else {
+        if(budget !== undefined && budget !== "" && budget !== null) {
+          $scope.data.needs[key].max = +budget;
 
           $scope.data.$save().then(function (ref) {
             $ionicLoading.hide();
