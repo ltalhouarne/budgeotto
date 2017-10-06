@@ -84,6 +84,12 @@ angular.module('starter.controllers', ['firebase', 'chart.js', 'ionic.native'])
           $scope.data.logs.wantsSection[key][date] = {value: val, notes: notes};
 
           $scope.data.wants[key].used = +use + +val;
+
+          $scope.data.$save().then(function (ref) {
+            $ionicLoading.hide();
+          }, function (error) {
+            $ionicLoading.hide();
+          });
         }
       } else {
         if(budget !== undefined && budget !== "" && budget !== null) {
@@ -173,38 +179,45 @@ angular.module('starter.controllers', ['firebase', 'chart.js', 'ionic.native'])
     });
   })
 
-  .controller('LoginCtrl', function ($ionicLoading, $state, $location, $cordovaGooglePlus, $scope, $firebaseObject, $ionicLoading, $ionicTabsDelegate) {
-    $scope.login = function () {
-      $ionicLoading.show();
+  .controller('LoginCtrl', function ($firebaseAuth, $ionicLoading, $state, $location, $cordovaGooglePlus, $scope, $firebaseObject, $ionicLoading, $ionicTabsDelegate) {
 
-      if(ionic.Platform.isWebView()){
-        $cordovaGooglePlus.login({})
-          .then(function(res) {
-            firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-              .then(function(result) {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        $state.go("tab.wants");
+      } else {
+        $scope.login = function () {
+          $ionicLoading.show();
+
+          if (ionic.Platform.isWebView()) {
+            $cordovaGooglePlus.login({})
+              .then(function (res) {
+                firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+                  .then(function (result) {
+                    $ionicLoading.hide();
+                    $state.go("tab.wants");
+                  })
+                  .catch(function (err) {
+                    console.log('error');
+                  });
+              }, function (err) {
+                console.log('error');
+                console.log(err);
+                $ionicLoading.hide();
+              });
+          } else {
+            firebase.auth().signInWithPopup(googleProvider)
+              .then(function (result) {
+                console.log("Result: " + result);
                 $ionicLoading.hide();
                 $state.go("tab.wants");
-              })
-              .catch(function(err) {
-                console.log('error');
-              });
-          }, function(err) {
-            console.log('error');
-            console.log(err);
-            $ionicLoading.hide();
-          });
-      } else{
-        firebase.auth().signInWithPopup(googleProvider)
-          .then(function(result) {
-            console.log("Result: " + result);
-            $ionicLoading.hide();
-            $state.go("tab.wants");
-          }).catch(function(error) {
-            console.log(error + " " + error);
-            $ionicLoading.hide();
-        });
+              }).catch(function (error) {
+              console.log(error + " " + error);
+              $ionicLoading.hide();
+            });
+          }
+        };
       }
-    };
+    });
   })
 
   .controller('NeedsCtrl', function ($scope, $firebaseObject, $ionicLoading, $firebaseArray, $timeout, $ionicTabsDelegate, $ionicPopup) {
@@ -297,6 +310,12 @@ angular.module('starter.controllers', ['firebase', 'chart.js', 'ionic.native'])
           $scope.data.logs.needsSection[key][date] = {value: val, notes: notes};
 
           $scope.data.needs[key].used = +use + +val;
+
+          $scope.data.$save().then(function (ref) {
+            $ionicLoading.hide();
+          }, function (error) {
+            $ionicLoading.hide();
+          });
         }
       } else {
         if(budget !== undefined && budget !== "" && budget !== null) {
